@@ -3,7 +3,13 @@ import bcrypt from 'bcrypt';
 
 const SALT_ROUNDS = 10;
 
-const UserSchema = new mongoose.Schema(
+interface IUser extends Document {
+  email: string;
+  password: string;
+  comparePassword(candidatePassword: string): Promise<boolean>;
+}
+
+const UserSchema = new mongoose.Schema<IUser>(
   {
     email: {
       type: String,
